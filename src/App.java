@@ -2,7 +2,7 @@ import java.util.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        LinkedList.runProblem();
+        mergeIntervals();
     }
 
     public static void printArrStr() {
@@ -237,6 +237,22 @@ public class App {
         return new String[][] { { "", "" } };
     }
 
+    public static int[] sortBubble() {
+
+        int[] arr = { 0, 4, 5, 2 };
+
+        for (var i = 0; i < arr.length; i++) {
+            for (var j = i; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
     /** Two Pointers */
     public static boolean validPalindrom(String s) {
         /**
@@ -377,6 +393,117 @@ public class App {
         }
 
         return false;
+    }
+
+    public static int longestSubstring(String input) {
+        /**
+         * 3
+         * Given a string s, find the length of the longest substring without duplicate
+         * characters.
+         * 
+         * Example 1:
+         * 
+         * Input: s = "abcabcbb"
+         * Output: 3
+         * Explanation: The answer is "abc", with the length of 3. Note that "bca" and
+         * "cab" are also correct answers.
+         * Example 2:
+         * 
+         * Input: s = "bbbbb"
+         * Output: 1
+         * Explanation: The answer is "b", with the length of 1.
+         * Example 3:
+         * 
+         * Input: s = "pwwkew"
+         * Output: 3
+         * Explanation: The answer is "wke", with the length of 3.
+         * Notice that the answer must be a substring, "pwke" is a subsequence and not a
+         * substring.
+         * 
+         */
+        String str = "pwwkew";
+        char[] strArr = str.toCharArray();
+        int pointer1 = 0;
+        int pointer2 = pointer1;
+        int maxSize = 0;
+        Map<Integer, String> resultMap = new HashMap<>();
+
+        while (pointer1 < strArr.length) {
+            List<String> listStr = new ArrayList<>();
+            while (pointer2 < strArr.length) {
+                String testValue = String.valueOf(strArr[pointer2]);
+                if (!listStr.contains(testValue)) {
+                    listStr.add(testValue);
+                } else {
+                    break;
+                }
+                pointer2 += 1;
+            }
+            pointer1 += 1;
+            resultMap.put(listStr.size(), String.join("", listStr));
+            if (listStr.size() > maxSize) {
+                maxSize = listStr.size();
+            }
+        }
+
+        System.out.printf("maxsize: %d, str: %s  \n", maxSize, resultMap.get(maxSize));
+        return maxSize;
+    }
+
+    public static int[][] mergeIntervals() {
+        /**
+         * 
+         * Given an array of intervals where intervals[i] = [starti, endi], merge all
+         * overlapping intervals, and return an array of the non-overlapping intervals
+         * that cover all the intervals in the input.
+         * 
+         * 
+         * Example 1:
+         * 
+         * Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+         * Output: [[1,6],[8,10],[15,18]]
+         * Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+         * Example 2:
+         * 
+         * Input: intervals = [[1,4],[4,5]]
+         * Output: [[1,5]]
+         * Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+         * Example 3:
+         * 
+         * Input: intervals = [[4,7],[1,4]]
+         * Output: [[1,7]]
+         * Explanation: Intervals [1,4] and [4,7] are considered overlapping.
+         * 
+         */
+
+        int[][] intervals = { { 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 } };
+        List<Integer[]> mergedInterval = new ArrayList<>();
+        int pointerNext = 1;
+        int current = 0;
+        if (intervals.length < 2)
+            return intervals;
+
+        while (pointerNext < intervals.length) {
+            int[] currArr = intervals[current];
+            int[] nextArr = intervals[pointerNext];
+            if (nextArr[0] <= currArr[1]) {
+                mergedInterval.add(new Integer[] { currArr[0], nextArr[1] });
+                current = pointerNext + 1;
+                pointerNext += 2;
+            } else {
+                mergedInterval.add(new Integer[] { currArr[0], currArr[1] });
+                mergedInterval.add(new Integer[] { nextArr[0], nextArr[1] });
+                current = pointerNext;
+                pointerNext += 1;
+            }
+        }
+
+        for (var i = 0; i < mergedInterval.size(); i++) {
+            System.out.printf("[%d, %d], ", mergedInterval.get(i)[0], mergedInterval.get(i)[1]);
+
+        }
+
+        return new int[][] { { 1, 2 } };
     }
 
     /** Binary Search */
