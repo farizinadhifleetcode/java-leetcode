@@ -1,8 +1,9 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        mergeIntervals();
+        buySellStcok(null);
     }
 
     public static void printArrStr() {
@@ -251,6 +252,196 @@ public class App {
             }
         }
         return arr;
+    }
+
+    public static int[] twoSumII(int[] input, int target) {
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+
+        return new int[] {1, 2, 3,4};
+
+    }
+
+    // dont understand
+    public static int rotatedSortedArray(int[] arr) {
+        /**
+         * 
+         * There is an integer array nums sorted in ascending order (with distinct values).
+
+            Prior to being passed to your function, nums is possibly left rotated at an unknown index k
+            (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], 
+            nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left 
+            rotated by 3 indices and become [4,5,6,7,0,1,2].
+
+            Given the array nums after the possible rotation and an integer target, return the index of 
+            target if it is in nums, or -1 if it is not in nums.
+
+            You must write an algorithm with O(log n) runtime complexity.
+
+            Example 1:
+
+            Input: nums = [4,5,6,7,0,1,2], target = 0
+            Output: 4
+            Example 2:
+
+            Input: nums = [4,5,6,7,0,1,2], target = 3
+            Output: -1
+            Example 3:
+
+            Input: nums = [4,5,6,7,0,1,2], target = 5
+            Output: 1
+            Example 4:
+
+            Input: nums = [1], target = 0
+            Output: -1
+
+            [4 5 6 7 8 0 1 2]
+         * 
+         * 
+         */
+
+        // class BinarySearch {
+        //     public static int search(int[] nums, int target) {
+        //         int low = 0;
+        //         int high = nums.length -1;
+        //         int mid = (high - low) /2;
+        //         int indexFound = -1;
+
+        //         while (low <= high) {
+        //             if (nums[mid] == target) {
+        //                 indexFound = mid;
+        //                 return indexFound;
+        //             }else if (target < nums[mid]) {
+        //                 high = mid - 1;
+        //                 mid = (high - low) / 2;
+
+        //             } else if (target > nums[mid]) {
+        //                 low = mid + 1;
+        //                 mid = (high + low) / 2;
+        //             }
+        //         }
+        //         return indexFound;
+        //     }
+            
+        // }
+
+        // int[] nums = {4,5,6,7,0,1,2};
+        // int target = 5;
+        // int indexFound = -1;
+
+        // // still dont understand
+
+        return 0;
+    }
+
+    public static int[] productOfArrayExcepSelf(int[] input) {
+        /**
+         * 238
+         * Given an integer array nums, return an array answer such that answer[i] is equal to the product of all 
+         * the elements of nums except nums[i].
+
+            The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+            You must write an algorithm that runs in O(n) time and without using the division operation.
+            Example 1:
+
+            Input: nums = [1,2,3,4]
+            Output: [24,12,8,6]
+            Example 2:
+
+            Input: nums = [-1,1,0,-3,3]
+            Output: [0,0,9,0,0]
+         * 
+         * 
+         */
+        int[] nums = {1,2,3,4};
+        int pointer;
+
+        List<Integer> results = new ArrayList<>();
+        int[] resultArr = new int[nums.length];
+
+        for (var i=0; i< nums.length; i++) {
+            pointer = 0;
+            int product = 1;
+            while (pointer < nums.length) {
+                if (i != pointer) {
+                    product = product * nums[pointer]; 
+                }
+            }
+            resultArr[i] = product;
+            results.add(product);
+        }
+
+        System.out.println(results);
+
+        return resultArr;
+    }
+
+    public static int[][] threeSum(int[] input) {
+        /**
+         * 15
+         * 
+         * Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] 
+         * such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+            Notice that the solution set must not contain duplicate triplets.
+            Example 1:
+
+            Input: nums = [-1,0,1,2,-1,-4]
+            Output: [[-1,-1,2],[-1,0,1]]
+            Explanation: 
+            nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+            nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+            nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+            The distinct triplets are [-1,0,1] and [-1,-1,2].
+            Notice that the order of the output and the order of the triplets does not matter.
+            Example 2:
+
+            Input: nums = [0,1,1]
+            Output: []
+            Explanation: The only possible triplet does not sum up to 0.
+            Example 3:
+
+            Input: nums = [0,0,0]
+            Output: [[0,0,0]]
+            Explanation: The only possible triplet sums up to 0.
+            
+         * 
+         */
+
+        int[] nums = {-1,0,1,2,-1,-4};
+        // assume the lengh input minimal 3
+        int pointer1 =0;
+        int pointer2 = pointer1 + 1;
+        int pointer3 = pointer2 +1;
+
+        List<int[]> results = new ArrayList<>();
+        Map<String, Integer> mappedResult = new HashMap<>();
+
+        while (pointer1 < nums.length) {
+            while (pointer2 < nums.length) {
+                while (pointer3 < nums.length) {
+                    int first = nums[pointer1];
+                    int second = nums[pointer2];
+                    int third = nums[pointer3];
+
+                    int total = first + second + third;
+                    if (total == 0) {
+                        int[] triplets = {first, second, third};
+                        results.add(triplets);
+                        Arrays.sort(triplets);
+                        List<Integer> mapKey = Arrays.asList(triplets)
+
+                    }
+                }
+            }
+        }
+
+            
     }
 
     /** Two Pointers */
@@ -506,6 +697,128 @@ public class App {
         return new int[][] { { 1, 2 } };
     }
 
+    public static int buySellStcok(int[] input) {
+        /**
+         * 121
+         * 
+         * You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+            You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+            Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+            
+
+            Example 1:
+
+            Input: prices = [7,1,5,3,6,4]
+            Output: 5
+            Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+            Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+            Example 2:
+
+            Input: prices = [7,6,4,3,1]
+            Output: 0
+            Explanation: In this case, no transactions are done and the max profit = 0.
+         * 
+         * 
+         */
+        int[] prices = {7,1,5,3,6,4};
+        int sellIndex;
+        int buyIndex;
+        int pointer1=0;
+        int pointer2 = pointer1;
+
+        if (prices.length == 0) return 0;
+        if (prices.length == 1) return prices[0];
+
+        sellIndex = pointer1;
+        buyIndex = pointer1;
+
+        boolean found = false;
+
+        while (pointer1 < prices.length) {
+            while (pointer2 < prices.length) {
+                if(prices[pointer2] < prices[buyIndex]) {
+                    buyIndex = pointer2;
+                    sellIndex = pointer2;
+                    break;
+                }
+
+                if(prices[pointer2] > prices[sellIndex]) {
+                    sellIndex = pointer2;
+                }
+
+                if (pointer2 == prices.length -1) {
+                    found = true;
+                    break;
+                }
+
+                pointer2 += 1;
+            }
+            
+            if (found == true) {
+                break;
+            }
+            pointer1 = pointer2;
+        }
+
+        int maxProfit = prices[sellIndex] - prices[buyIndex];
+        System.out.printf("max profit: %d", maxProfit);
+
+        return maxProfit;
+
+    }
+
+    public static int maximumProductSubArray(int[] input) {
+        /**
+         * 152
+         * Given an integer array nums, find a subarray that has the largest product, and return the product.
+
+            The test cases are generated so that the answer will fit in a 32-bit integer.
+
+            Note that the product of an array with a single element is the value of that element.
+
+            Example 1:
+
+            Input: nums = [2,3,-2,4]
+            Output: 6
+            Explanation: [2,3] has the largest product 6.
+            Example 2:
+
+            Input: nums = [-2,0,-1]
+            Output: 0
+            Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+            
+
+            Constraints:
+
+            1 <= nums.length <= 2 * 104
+            -10 <= nums[i] <= 10
+            The product of any subarray of nums is guaranteed to fit in a 32-bit integer.
+         * 
+         * 
+         */
+        int[] nums = {2,3,-2,4};
+        int pointer1 =0 ;
+        int pointer2 = pointer1 + 1;
+        if (nums.length == 1) return nums[pointer1];
+
+        int maxProduct = nums[pointer1] * nums[pointer2];
+
+        while(pointer2 < nums.length) {
+            int product = nums[pointer1] * nums[pointer2];
+
+            if (maxProduct > product) {
+                maxProduct = product;
+            }
+            
+            pointer1 +=1;
+            pointer2 +=1;
+        }
+
+        return maxProduct;
+    }
     /** Binary Search */
     public static int searchInsertPosition(int[] input) {
         /**
